@@ -1,0 +1,3 @@
+pip install python-whois dnspython requests
+pip install python-whois dns.resolver requests
+apt install tor         tor start:systemctl start tor
