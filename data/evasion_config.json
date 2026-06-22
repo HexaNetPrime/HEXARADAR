@@ -1,0 +1,23 @@
+{
+  "proxy": {
+    "type": "socks5",
+    "host": "127.0.0.1",
+    "port": 9050,
+    "enabled": false
+  },
+  "vpn": {
+    "interface": "tun0",
+    "provider": "OpenVPN",
+    "enabled": false
+  },
+  "mac": {
+    "interface": "eth0",
+    "enabled": false
+  },
+  "traffic": {
+    "scan_delay": 500,
+    "max_rate": 1000,
+    "min_rate": 100,
+    "enabled": true
+  }
+}

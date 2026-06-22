@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEXARADAR v3.0 - Complete User Manual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0f;
+            color: #e8e8f0;
+            padding: 15px;
+        }
+        
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: #0f0f1a;
+            border: 1px solid #ffd700;
+            border-radius: 10px;
+            padding: 25px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 2px solid #ffd700;
+            margin-bottom: 25px;
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
+            color: #ffd700;
+            text-shadow: 0 0 30px rgba(255,215,0,0.3);
+        }
+        
+        .header .subtitle {
+            color: #7a7a9a;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #ffd700;
+            color: #0a0a0f;
+            padding: 3px 12px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin: 3px;
+        }
+        
+        .badge-blue {
+            background: #00e5ff;
+            color: #0a0a0f;
+        }
+        
+        .badge-green {
+            background: #00ff88;
+            color: #0a0a0f;
+        }
+        
+        .badge-red {
+            background: #ff1744;
+            color: #fff;
+        }
+        
+        .toc {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #2a2a4a;
+        }
+        
+        .toc h2 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+        
+        .toc a {
+            color: #00e5ff;
+            text-decoration: none;
+            display: block;
+            padding: 6px 10px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+        
+        .toc a:hover {
+            background: #2a2a4a;
+            color: #ffd700;
+            padding-left: 15px;
+        }
+        
+        .section {
+            background: #141420;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .section h2 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.6em;
+        }
+        
+        .section h3 {
+            color: #00e5ff;
+            margin: 18px 0 12px 0;
+            font-size: 1.2em;
+        }
+        
+        .section h4 {
+            color: #7a7a9a;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+        
+        .step {
+            background: #1a1a2e;
+            padding: 15px 20px;
+            margin: 12px 0;
+            border-radius: 6px;
+            border-left: 3px solid #00e5ff;
+        }
+        
+        .step-number {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1.05em;
+        }
+        
+        .code {
+            background: #0a0a0f;
+            color: #00ff88;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            margin: 10px 0;
+            overflow-x: auto;
+            border: 1px solid #2a2a4a;
+            white-space: pre-wrap;
+        }
+        
+        .code-output {
+            background: #0a0a0f;
+            color: #e8e8f0;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            margin: 10px 0;
+            overflow-x: auto;
+            border: 1px solid #2a2a4a;
+            white-space: pre-wrap;
+        }
+        
+        .warning {
+            background: #2a1a1a;
+            border-left: 4px solid #ff1744;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning strong {
+            color: #ff1744;
+        }
+        
+        .success {
+            background: #1a2a1a;
+            border-left: 4px solid #00ff88;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .success strong {
+            color: #00ff88;
+        }
+        
+        .info {
+            background: #1a1a2a;
+            border-left: 4px solid #00e5ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .info strong {
+            color: #00e5ff;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 15px 0;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .card {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #2a2a4a;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            border-color: #ffd700;
+            transform: translateY(-2px);
+        }
+        
+        .card .icon {
+            font-size: 2.5em;
+            margin-bottom: 8px;
+        }
+        
+        .card .title {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1em;
+        }
+        
+        .card .desc {
+            color: #7a7a9a;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #2a2a4a;
+        }
+        
+        th {
+            background: #1a1a2e;
+            color: #ffd700;
+        }
+        
+        td {
+            color: #e8e8f0;
+        }
+        
+        tr:hover td {
+            background: #1a1a2e;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #ffd700;
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: #7a7a9a;
+        }
+        
+        .tab-header {
+            background: #1a1a2e;
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin: 10px 0;
+            display: inline-block;
+            border: 1px solid #2a2a4a;
+        }
+        
+        .tab-header span {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .header h1 { font-size: 1.8em; }
+            .section { padding: 15px; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .toc-grid { grid-template-columns: 1fr; }
+        }
+        
+        .badge-tab {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 0.7em;
+            margin: 2px;
+        }
+        
+        .badge-tab.main { background: #ffd700; color: #0a0a0f; }
+        .badge-tab.output { background: #00e5ff; color: #0a0a0f; }
+        .badge-tab.ai { background: #9b59ff; color: #fff; }
+        .badge-tab.network { background: #00ff88; color: #0a0a0f; }
+        .badge-tab.osint { background: #ff6b35; color: #fff; }
+        .badge-tab.analytics { background: #ff2d95; color: #fff; }
+        .badge-tab.evasion { background: #ff1744; color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- ==================== HEADER ==================== -->
+        <div class="header">
+            <h1>⚡ HEXARADAR v3.0</h1>
+            <div class="subtitle">Complete User Manual - Step by Step Guide</div>
+            <div style="margin-top: 15px;">
+                <span class="badge">🔥 7 Tabs</span>
+                <span class="badge badge-blue">🤖 5 AI Features</span>
+                <span class="badge badge-green">⚡ Offline</span>
+                <span class="badge badge-red">🛡 No API Required</span>
+            </div>
+        </div>
+        
+        <!-- ==================== TABLE OF CONTENTS ==================== -->
+        <div class="toc">
+            <h2>📋 TABLE OF CONTENTS</h2>
+            <div class="toc-grid">
+                <div>
+                    <a href="#intro">1. 📖 Introduction</a>
+                    <a href="#getting-started">2. 🚀 Getting Started</a>
+                    <a href="#tab-main">3. 🏠 MAIN Tab</a>
+                    <a href="#tab-output">4. 📊 OUTPUT Tab</a>
+                </div>
+                <div>
+                    <a href="#tab-ai">5. 🤖 AI Tab</a>
+                    <a href="#tab-network">6. 🌐 NETWORK Tab</a>
+                    <a href="#tab-osint">7. 🔍 OSINT Tab</a>
+                </div>
+                <div>
+                    <a href="#tab-analytics">8. 📊 ANALYTICS Tab</a>
+                    <a href="#tab-evasion">9. 🛡 EVASION Tab</a>
+                    <a href="#export">10. 💾 Export</a>
+                </div>
+                <div>
+                    <a href="#faq">11. ❓ FAQ</a>
+                    <a href="#quick-ref">12. 📋 Quick Reference</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== SECTION 1: INTRODUCTION ==================== -->
+        <div class="section" id="intro">
+            <h2>1. 📖 Introduction</h2>
+            <p><strong>HEXARADAR v3.0</strong> एक <strong>AI-Powered Network Security Scanner</strong> है। यह tool आपको <strong>Nmap scans</strong> करने, <strong>Vulnerabilities</strong> detect करने, <strong>Network Mapping</strong> करने, <strong>OSINT</strong> इकट्ठा करने, <strong>Data Analytics</strong> देखने और <strong>Evasion Techniques</strong> use करने में मदद करता है।</p>
+            
+            <div class="info">
+                <strong>💡 सभी Features बिना किसी API के ऑफलाइन काम करते हैं!</strong>
+            </div>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🛡️</div>
+                    <div class="title">7 Tabs</div>
+                    <div class="desc">MAIN | OUTPUT | AI | NETWORK | OSINT | ANALYTICS | EVASION</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🤖</div>
+                    <div class="title">5 AI Features</div>
+                    <div class="desc">Vuln Prediction | Network Mapping | OSINT | Analytics | Evasion</div>
+                </div>
+                <div class="card">
+                    <div class="icon">📊</div>
+                    <div class="title">20+ Sub-Features</div>
+                    <div class="desc">Vulnerability, Anomaly, CVE, Trend, Compliance, SLA, etc.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">💾</div>
+                    <div class="title">Export Options</div>
+                    <div class="desc">HTML | JSON | CSV Reports</div>
+                </div>
+            </div>
+            
+            <div class="warning">
+                <strong>⚠️ LEGAL DISCLAIMER:</strong><br>
+                इस tool का use केवल <strong>authorized systems</strong> पर करें। बिना permission के किसी के network पर scan करना illegal हो सकता है।
+            </div>
+        </div>
+        
+        <!-- ==================== SECTION 2: GETTING STARTED ==================== -->
+        <div class="section" id="getting-started">
+            <h2>2. 🚀 Getting Started</h2>
+            
+            <h3>📦 Requirements</h3>
+            <div class="code">
+# Python 3.6+
+# Nmap installed
+# Tkinter (Python GUI)
+
+# Install dependencies:
+pip install python-whois dnspython requests
+            </div>
+            
+            <h3>▶️ Launch HEXARADAR</h3>
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>Terminal/CMD खोलें</strong>
+                <div class="code">cd /path/to/HEXARADAR</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>Run करें</strong>
+                <div class="code"># Linux/Mac
+python3 main.py
+
+# Windows
+python main.py</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 3:</span> <strong>GUI खुल जाएगी</strong>
+                <div class="success">
+✅ HEXARADAR v3.0 Successfully Launched!
+✅ 7 Tabs Available
+✅ All Features Ready
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== SECTION 3: MAIN TAB ==================== -->
+        <div class="section" id="tab-main">
+            <h2>3. 🏠 MAIN Tab</h2>
+            
+            <div class="tab-header">
+                <span>🏠 MAIN</span> - Nmap Scanning
+            </div>
+            
+            <p>MAIN Tab आपका <strong>scanning hub</strong> है। यहाँ से आप Nmap scans चला सकते हैं।</p>
+            
+            <h3>🎯 Target Input</h3>
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>Target डालें</strong>
+                <div class="code">192.168.159.128  (या कोई IP/domain)</div>
+            </div>
+            
+            <h3>⚡ Quick Actions</h3>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="icon">🚀</div>
+                    <div class="title">ULTRA</div>
+                    <div class="desc">सबसे तेज scan (5-10 sec)</div>
+                </div>
+                <div class="card">
+                    <div class="icon">⚡</div>
+                    <div class="title">FAST</div>
+                    <div class="desc">Fast scan (15-30 sec)</div>
+                </div>
+                <div class="card">
+                    <div class="icon">📋</div>
+                    <div class="title">LIST</div>
+                    <div class="desc">Hosts list (&lt;2 sec)</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🛡️</div>
+                    <div class="title">STEALTH</div>
+                    <div class="desc">चुपके से scan (1-2 min)</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🔍</div>
+                    <div class="title">FULL</div>
+                    <div class="desc">पूरा scan (3-5 min)</div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>Quick Action दबाएं</strong>
+                <div class="code">कोई भी Quick Action बटन दबाएं (जैसे: 🔍 FULL)</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 3:</span> <strong>Scan चलेगा</strong>
+                <div class="code-output">
+======================================================================
+[*] SCAN: 23:52:58
+[*] nmap -p- -sV -sC 192.168.159.128
+======================================================================
+
+Starting Nmap 7.98 ... 
+Nmap scan report for 192.168.159.128
+Host is up (0.0020s latency).
+PORT      STATE SERVICE     VERSION
+21/tcp    open  ftp         vsftpd 2.3.4
+22/tcp    open  ssh         OpenSSH 4.7p1
+...
+                </div>
+            </div>
+            
+            <h3>🛠️ Nmap Options Tabs</h3>
+            <p>नीचे 11 Tabs में 60+ Nmap options हैं:</p>
+            <div class="grid-3">
+                <div class="card"><div class="title">🎯 TARGET</div><div class="desc">Target specifications</div></div>
+                <div class="card"><div class="title">🔍 HOST</div><div class="desc">Host discovery</div></div>
+                <div class="card"><div class="title">⚡ SCAN</div><div class="desc">Scan techniques</div></div>
+                <div class="card"><div class="title">🔌 PORT</div><div class="desc">Port specifications</div></div>
+                <div class="card"><div class="title">🛠 SERVICE</div><div class="desc">Service detection</div></div>
+                <div class="card"><div class="title">📜 SCRIPT</div><div class="desc">Script scanning</div></div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 4:</span> <strong>Options Select करें</strong>
+                <div class="code">Tabs में से options पर Tick (✓) करें</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 5:</span> <strong>▶ RUN दबाएं</strong>
+                <div class="code">Selected options के साथ scan चलेगा</div>
+            </div>
+        </div>
+        
+        <!-- ==================== SECTION 4: OUTPUT TAB ==================== -->
+        <div class="section" id="tab-output">
+            <h2>4. 📊 OUTPUT Tab</h2>
+            
+            <div class="tab-header">
+                <span>📊 OUTPUT</span> - Console Output
+            </div>
+            
+            <p>OUTPUT Tab में <strong>scan results</strong> live दिखते हैं।</p>
+            
+            <h3>📝 Manual Command</h3>
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>Manual Command लिखें</strong>
+                <div class="code">nmap -p- -sV -sC 192.168.159.128</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>▶ RUN दबाएं</strong>
+                <div class="code">Manual command scan चलेगा</div>
+            </div>
+            
+            <h3>🛠️ Output Buttons</h3>
+            <table>
+                <tr><th>Button</th><th>Action</th></tr>
+                <tr><td>🗑 CLEAR</td><td>Output clear करें</td></tr>
+                <tr><td>📋 COPY</td><td>Output copy करें</td></tr>
+                <tr><td>💾 SAVE</td><td>HTML/JSON में save करें</td></tr>
+            </table>
+        </div>
+        
+        <!-- ==================== SECTION 5: AI TAB ==================== -->
+        <div class="section" id="tab-ai">
+            <h2>5. 🤖 AI Tab</h2>
+            
+            <div class="tab-header">
+                <span>🤖 AI</span> - 5 AI Features
+            </div>
+            
+            <p>AI Tab में <strong>5 Powerful AI Features</strong> हैं:</p>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🤖</div>
+                    <div class="title">Advanced AI Engine</div>
+                    <div class="desc">Vuln Prediction + Anomaly + CVE + Report</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🌐</div>
+                    <div class="title">Network Mapping</div>
+                    <div class="desc">Discover + Topology + Dependencies + Attack Surface + Live Track</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🔍</div>
+                    <div class="title">Advanced Discovery</div>
+                    <div class="desc">OSINT + Passive Recon + Email + Tech + Cloud</div>
+                </div>
+                <div class="card">
+                    <div class="icon">📊</div>
+                    <div class="title">Data Analytics</div>
+                    <div class="desc">Trend + Risk Score + Compliance + SLA + Predictive</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🛡️</div>
+                    <div class="title">Evasion Techniques</div>
+                    <div class="desc">Proxy + VPN + MAC + Traffic + IDS</div>
+                </div>
+            </div>
+            
+            <h3>🤖 Advanced AI Engine - Use कैसे करें</h3>
+            
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>Scan करें</strong>
+                <div class="code">MAIN Tab → Target → ▶ RUN</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>AI Tab पर जाएं</strong>
+                <div class="code">🤖 AI Tab → 🤖 Advanced AI Engine selected है</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 3:</span> <strong>कोई Sub-Feature दबाएं</strong>
+                <div class="code">
+🔮 PREDICT   - Vulnerabilities predict करें
+⚡ OPTIMIZE  - Scan parameters optimize करें
+🕵️ ANOMALY  - Backdoor/botnet detect करें
+📚 CVE DB    - 200+ CVEs search करें
+📊 FULL REPORT - Complete AI report generate करें
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 4:</span> <strong>Results देखें</strong>
+                <div class="code-output">
+🔮 VULNERABILITY PREDICTION
+============================================================
+📊 SERVICES FOUND: 28
+   Port 445: smb
+   Port 22: ssh
+   Port 80: http
+
+📊 CVSS-BASED RISK ASSESSMENT
+   • CVSS Score: 8.5/10 🔴
+   • Risk Level: HIGH
+   • CRITICAL: 6
+   • HIGH: 5
+                </div>
+            </div>
+            
+            <h3>🌐 Network Mapping - Use कैसे करें</h3>
+            
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>🌐 Network Mapping select करें</strong>
+                <div class="code">AI Tab → 🌐 Network Mapping दबाएं</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>Sub-Feature दबाएं</strong>
+                <div class="code">
+🌐 DISCOVER    - Live hosts ढूंढें
+🗺️ TOPOLOGY    - Network path देखें
+🔗 DEPENDENCIES - Service dependencies देखें
+🎯 ATTACK SURFACE - Attack vectors देखें
+📡 LIVE TRACK   - Real-time host monitoring
+                </div>
+            </div>
+            
+            <h3>🔍 Advanced Discovery - Use कैसे करें</h3>
+            
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>🔍 Advanced Discovery select करें</strong>
+                <div class="code">AI Tab → 🔍 Advanced Discovery दबाएं</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>Target डालें</strong>
+                <div class="code">Target: microsoft.com (या कोई domain)</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 3:</span> <strong>🔍 SCAN दबाएं</strong>
+                <div class="code-output">
+📧 EMAIL ENUMERATION
+✅ admin@microsoft.com
+✅ info@microsoft.com
+✅ support@microsoft.com
+📊 Found 19 potential emails
+                </div>
+            </div>
+            
+            <h3>📊 Data Analytics - Use कैसे करें</h3>
+            
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>📊 Data Analytics select करें</strong>
+                <div class="code">AI Tab → 📊 Data Analytics दबाएं</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>Sub-Feature दबाएं</strong>
+                <div class="code">
+📈 TREND      - 30-day trend analysis
+🎯 RISK SCORE - Auto risk scoring (0-100)
+✅ COMPLIANCE - PCI-DSS, HIPAA, GDPR, ISO
+⏱️ SLA        - Uptime + Response Time
+🔮 PREDICT    - 7-day risk prediction
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 3:</span> <strong>Results देखें</strong>
+                <div class="code-output">
+🎯 RISK SCORING
+   • Total Open Ports: 28
+   • Risk Score: 75/100
+   • Risk Level: 🔴 CRITICAL
+                </div>
+            </div>
+            
+            <h3>🛡 Evasion Techniques - Use कैसे करें</h3>
+            
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>🛡 Evasion Techniques select करें</strong>
+                <div class="code">AI Tab → 🛡 Evasion Techniques दबाएं</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>Feature Configure करें</strong>
+                <div class="code">
+🌐 PROXY  → Type: SOCKS5, Host: 127.0.0.1, Port: 9050 → ▶ ENABLE
+🔒 VPN    → Interface: tun0 → 🔍 CHECK STATUS / 🔄 ROTATE VPN
+🔧 MAC    → Interface: eth0 → 🔀 RANDOMIZE MAC
+📊 TRAFFIC → Delay: 500ms, Max Rate: 500 → ✅ APPLY SHAPING
+🕵️ IDS   → Target: 192.168.159.128 → 🔍 DETECT IDS/IPS
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== SECTION 6: NETWORK TAB ==================== -->
+        <div class="section" id="tab-network">
+            <h2>6. 🌐 NETWORK Tab</h2>
+            
+            <div class="tab-header">
+                <span>🌐 NETWORK</span> - Network Mapping
+            </div>
+            
+            <p>यह Tab सीधे <strong>Network Mapping</strong> feature खोलता है।</p>
+            
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>🌐 NETWORK Tab पर जाएं</strong>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>Subnet डालें</strong>
+                <div class="code">192.168.159.0/24</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 3:</span> <strong>🌐 DISCOVER दबाएं</strong>
+                <div class="code-output">
+🌐 DISCOVER HOSTS
+============================================================
+📊 DISCOVERY RESULTS
+   • Total Hosts Found: 456
+
+🌐 HOST LIST
+   🖥️  160.79.104.1
+      📍 MAC: 00:11:22:33:44:55
+      ✅ Status: UP
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== SECTION 7: OSINT TAB ==================== -->
+        <div class="section" id="tab-osint">
+            <h2>7. 🔍 OSINT Tab</h2>
+            
+            <div class="tab-header">
+                <span>🔍 OSINT</span> - Advanced Discovery
+            </div>
+            
+            <p>यह Tab सीधे <strong>Advanced Discovery (OSINT)</strong> feature खोलता है।</p>
+            
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>🔍 OSINT Tab पर जाएं</strong>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>Domain डालें</strong>
+                <div class="code">microsoft.com</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 3:</span> <strong>🔍 SCAN दबाएं</strong>
+                <div class="code-output">
+🌐 OSINT RESULTS: microsoft.com
+📋 WHOIS INFORMATION
+   Domain: MICROSOFT.COM
+   Registrar: MarkMonitor, Inc.
+   Creation Date: 1991-05-02
+   Expiry Date: 2027-05-03
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== SECTION 8: ANALYTICS TAB ==================== -->
+        <div class="section" id="tab-analytics">
+            <h2>8. 📊 ANALYTICS Tab</h2>
+            
+            <div class="tab-header">
+                <span>📊 ANALYTICS</span> - Data Analytics
+            </div>
+            
+            <p>यह Tab सीधे <strong>Data Analytics</strong> feature खोलता है।</p>
+            
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>📊 ANALYTICS Tab पर जाएं</strong>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>Sub-Feature दबाएं</strong>
+                <div class="code">
+📈 TREND      - 30-day trend analysis
+🎯 RISK SCORE - Auto risk scoring (0-100)
+✅ COMPLIANCE - PCI-DSS, HIPAA, GDPR, ISO
+⏱️ SLA        - Uptime + Response Time
+🔮 PREDICT    - 7-day risk prediction
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== SECTION 9: EVASION TAB ==================== -->
+        <div class="section" id="tab-evasion">
+            <h2>9. 🛡 EVASION Tab</h2>
+            
+            <div class="tab-header">
+                <span>🛡 EVASION</span> - Evasion Techniques
+            </div>
+            
+            <p>यह Tab सीधे <strong>Evasion Techniques</strong> feature खोलता है।</p>
+            
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>🛡 EVASION Tab पर जाएं</strong>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>Feature Configure करें और USE करें</strong>
+                <div class="code">
+🌐 PROXY  → ▶ ENABLE (Tor proxy के through scan)
+🔒 VPN    → 🔍 CHECK STATUS / 🔄 ROTATE VPN
+🔧 MAC    → 🔀 RANDOMIZE MAC
+📊 TRAFFIC → ✅ APPLY SHAPING
+🕵️ IDS   → 🔍 DETECT IDS/IPS
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== SECTION 10: EXPORT ==================== -->
+        <div class="section" id="export">
+            <h2>10. 💾 Export</h2>
+            
+            <h3>AI Features से Export:</h3>
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>AI analysis करें</strong>
+                <div class="code">PREDICT, FULL REPORT, या कोई AI feature run करें</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>💾 EXPORT दबाएं</strong>
+                <div class="code">CSV/JSON file save होगी</div>
+            </div>
+            
+            <h3>Network/OSINT से Export:</h3>
+            <div class="step">
+                <span class="step-number">STEP 1:</span> <strong>Scan करें</strong>
+                <div class="code">DISCOVER, OSINT SCAN, आदि</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">STEP 2:</span> <strong>💾 EXPORT दबाएं</strong>
+                <div class="code">CSV/JSON file save होगी</div>
+            </div>
+            
+            <div class="success">
+                <strong>✅ Export Formats:</strong><br>
+                • CSV - Excel/Google Sheets में open करें<br>
+                • JSON - Programmatic use के लिए<br>
+                • HTML - Professional report
+            </div>
+        </div>
+        
+        <!-- ==================== SECTION 11: FAQ ==================== -->
+        <div class="section" id="faq">
+            <h2>11. ❓ FAQ</h2>
+            
+            <div class="step">
+                <span class="step-number">Q1:</span> <strong>AI Features क्यों काम नहीं कर रहे?</strong>
+                <div class="info">पहले <strong>scan करें</strong> (MAIN Tab से), फिर AI features use करें। AI features scan results के बिना काम नहीं करते।</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">Q2:</span> <strong>Proxy Enable करने के बाद scan क्यों नहीं हो रहा?</strong>
+                <div class="info">Tor proxy सही से running है या नहीं check करें: <code>sudo systemctl status tor</code></div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">Q3:</span> <strong>MAC Randomize करने पर network क्यों disconnect हो गया?</strong>
+                <div class="info">MAC change करने पर network interface temporarily down हो जाता है। कुछ सेकंड wait करें, auto reconnect हो जाएगा।</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">Q4:</span> <strong>Compliance FAIL क्यों आ रहा है?</strong>
+                <div class="info">यह ERROR नहीं है, यह <strong>actual result</strong> है। Telnet, FTP, SMB जैसे insecure services चल रहे हैं, इसलिए FAIL आ रहा है।</div>
+            </div>
+            
+            <div class="step">
+                <span class="step-number">Q5:</span> <strong>Data Analytics के लिए कितने scans चाहिए?</strong>
+                <div class="info">• TREND के लिए: कम से कम 2 scans<br>
+• PREDICT के लिए: कम से कम 5 scans (अलग-अलग दिनों में)</div>
+            </div>
+        </div>
+        
+        <!-- ==================== SECTION 12: QUICK REFERENCE ==================== -->
+        <div class="section" id="quick-ref">
+            <h2>12. 📋 Quick Reference</h2>
+            
+            <table>
+                <tr><th>क्या करना है</th><th>कहाँ जाएं</th></tr>
+                <tr><td>🚀 Scan करना</td><td>MAIN Tab</td></tr>
+                <tr><td>📊 Scan output देखना</td><td>OUTPUT Tab</td></tr>
+                <tr><td>🔮 Vulnerabilities जाननी हैं</td><td>AI → Advanced AI Engine → PREDICT</td></tr>
+                <tr><td>🌐 Network hosts ढूंढने हैं</td><td>AI → Network Mapping या NETWORK Tab</td></tr>
+                <tr><td>🔍 Domain OSINT करना है</td><td>AI → Advanced Discovery या OSINT Tab</td></tr>
+                <tr><td>📈 Analytics देखना है</td><td>AI → Data Analytics या ANALYTICS Tab</td></tr>
+                <tr><td>🛡 Evasion use करना है</td><td>AI → Evasion Techniques या EVASION Tab</td></tr>
+                <tr><td>💾 Data save करना है</td><td>कहीं भी EXPORT बटन</td></tr>
+            </table>
+            
+            <div class="success">
+                <strong>✅ Quick Tips:</strong><br>
+                • FULL SCAN (-p- -sV -sC) करें → सबसे अच्छे results के लिए<br>
+                • IDS/IPS Detection पहले करें → फिर Evasion techniques apply करें<br>
+                • Compliance check करें → Audit से पहले<br>
+                • Regularly scans करें → Trend analysis के लिए
+            </div>
+        </div>
+        
+        <!-- ==================== FOOTER ==================== -->
+        <div class="footer">
+            <p>⚡ HEXARADAR v3.0 - Complete User Manual</p>
+            <p>AI-Powered Network Security Scanner | Offline | No API Required</p>
+            <p style="margin-top: 10px; color: #4a4a6a;">
+                ⚠️ USE RESPONSIBLY - ONLY ON AUTHORIZED SYSTEMS
+            </p>
+            <p style="margin-top: 5px; color: #4a4a6a; font-size: 0.8em;">
+                📅 Generated: 2026-06-22 | 🛡 7 Tabs | 🤖 5 AI Features | ⚡ 20+ Sub-Features
+            </p>
+        </div>
+        
+    </div>
+</body>
+</html>
