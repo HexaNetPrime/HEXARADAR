@@ -1,0 +1,92 @@
+{
+    "1524": {
+        "type": "BACKDOOR",
+        "severity": "CRITICAL",
+        "description": "Ingreslock backdoor - Well-known backdoor port",
+        "recommendation": "\ud83d\udd34 IMMEDIATE INVESTIGATION! System may be compromised"
+    },
+    "31337": {
+        "type": "BACKDOOR",
+        "severity": "CRITICAL",
+        "description": "Back Orifice / Elite backdoor port",
+        "recommendation": "\ud83d\udd34 IMMEDIATE INVESTIGATION! Backdoor detected"
+    },
+    "4444": {
+        "type": "BACKDOOR",
+        "severity": "CRITICAL",
+        "description": "Metasploit Meterpreter default port",
+        "recommendation": "\ud83d\udd34 IMMEDIATE INVESTIGATION! Penetration testing tool detected"
+    },
+    "6667": {
+        "type": "BOTNET",
+        "severity": "CRITICAL",
+        "description": "IRC port - Often used for botnet C2",
+        "recommendation": "\ud83d\udd34 IMMEDIATE INVESTIGATION! Botnet C2 detected"
+    },
+    "1337": {
+        "type": "BACKDOOR",
+        "severity": "CRITICAL",
+        "description": "Leet backdoor port",
+        "recommendation": "\ud83d\udd34 IMMEDIATE INVESTIGATION! Backdoor detected"
+    },
+    "12345": {
+        "type": "BACKDOOR",
+        "severity": "CRITICAL",
+        "description": "NetBus backdoor - Remote admin trojan",
+        "recommendation": "\ud83d\udd34 IMMEDIATE INVESTIGATION! Malware detected"
+    },
+    "512": {
+        "type": "INSECURE_SERVICE",
+        "severity": "CRITICAL",
+        "description": "Rexec - Unrestricted remote execution",
+        "recommendation": "\ud83d\udd34 DISABLE Rexec! Use SSH instead"
+    },
+    "513": {
+        "type": "INSECURE_SERVICE",
+        "severity": "CRITICAL",
+        "description": "Rlogin - Unrestricted remote login",
+        "recommendation": "\ud83d\udd34 DISABLE Rlogin! Use SSH instead"
+    },
+    "514": {
+        "type": "INSECURE_SERVICE",
+        "severity": "CRITICAL",
+        "description": "Rshell - Unrestricted remote shell",
+        "recommendation": "\ud83d\udd34 DISABLE Rshell! Use SSH instead"
+    },
+    "23": {
+        "type": "INSECURE_PROTOCOL",
+        "severity": "HIGH",
+        "description": "Telnet - Plain text authentication",
+        "recommendation": "\ud83d\udfe0 DISABLE TELNET! Use SSH instead"
+    },
+    "21": {
+        "type": "INSECURE_PROTOCOL",
+        "severity": "MEDIUM",
+        "description": "FTP - Plain text authentication",
+        "recommendation": "\ud83d\udfe1 Use SFTP or FTPS instead"
+    },
+    "1099": {
+        "type": "SUSPICIOUS",
+        "severity": "HIGH",
+        "description": "Java RMI Registry - RCE risk",
+        "recommendation": "\ud83d\udfe0 Restrict RMI access"
+    },
+    "6000": {
+        "type": "SUSPICIOUS",
+        "severity": "HIGH",
+        "description": "X11 - Keylogging/screen capture risk",
+        "recommendation": "\ud83d\udfe0 Restrict X11 access"
+    },
+    "2049": {
+        "type": "SUSPICIOUS",
+        "severity": "MEDIUM",
+        "description": "NFS - Unrestricted file sharing",
+        "recommendation": "\ud83d\udfe1 Restrict NFS exports"
+    },
+    "3389": {
+        "type": "HIGH_RISK",
+        "severity": "CRITICAL",
+        "description": "RDP - BlueKeep and other RDP vulnerabilities",
+        "recommendation": "\ud83d\udd34 Enable NLA, install patches"
+    }
+}
