@@ -1,6 +1,4 @@
-# ⚡ HEXARADAR v3.0
-
-### AI-Powered Network Security Scanner | Offline | No API Required
+# ⚡ HEXARADAR v3.0 - AI-Powered Network Security Scanner
 
 [![Python](https://img.shields.io/badge/Python-3.6+-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -9,170 +7,135 @@
 [![Offline](https://img.shields.io/badge/Offline-Yes-brightgreen.svg)]()
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20Mac-lightgrey.svg)]()
 
+> **क्या आपने कभी सोचा है कि आपके नेटवर्क में कितनी vulnerabilities हैं?**  
+> **HEXARADAR v3.0** एक **AI-Powered Network Security Scanner** है जो आपको **Nmap scans** करने, **Vulnerabilities** detect करने, **Network Mapping** करने, **OSINT** इकट्ठा करने, **Data Analytics** देखने और **Evasion Techniques** use करने में मदद करता है।
+
 ---
 
-## 📌 Table of Contents
+## 📋 **Table of Contents**
 
-- [🌟 Introduction](#-introduction)
-- [🚀 Features](#-features)
-- [📸 Screenshots](#-screenshots)
+- [✨ Features](#-features)
+- [📁 Project Structure](#-project-structure)
 - [🛠️ Installation](#️-installation)
-- [📖 Usage Guide](#-usage-guide)
-- [📂 Project Structure](#-project-structure)
-- [🤖 AI Features Details](#-ai-features-details)
-- [📊 ML Module](#-ml-module)
-- [🛡️ Evasion Techniques](#️-evasion-techniques)
-- [📚 CVE Database](#-cve-database)
-- [⚠️ Disclaimer](#️-disclaimer)
+- [🚀 Quick Start](#-quick-start)
+- [📖 Complete User Manual](#-complete-user-manual)
+- [🤖 AI Features Detail](#-ai-features-detail)
+- [📊 ML Module Detail](#-ml-module-detail)
+- [🛡 Evasion Techniques Detail](#-evasion-techniques-detail)
+- [📈 Data Analytics Detail](#-data-analytics-detail)
+- [🔍 OSINT Features Detail](#-osint-features-detail)
+- [🌐 Network Mapping Detail](#-network-mapping-detail)
+- [📋 All Buttons Detail](#-all-buttons-detail)
+- [📁 All Files Detail](#-all-files-detail)
+- [⚠️ Legal Disclaimer](#️-legal-disclaimer)
 - [📝 License](#-license)
 - [👨‍💻 Author](#-author)
 
 ---
 
-## 🌟 Introduction
+## ✨ **Features**
 
-**HEXARADAR v3.0** is a **complete AI-Powered Network Security Scanner** built with Python and Tkinter. It combines **Nmap scanning** with **Artificial Intelligence** to provide:
+### 🏠 **MAIN TAB - Scanning Hub**
 
-- 🔮 **Vulnerability Prediction** with CVSS scoring
-- 🌐 **Network Mapping** and topology discovery
-- 🔍 **OSINT** (Open Source Intelligence) gathering
-- 📊 **Data Analytics** and compliance checking
-- 🛡️ **Evasion Techniques** for IDS/IPS bypass
-- 🧠 **Machine Learning** vulnerability prediction
-
-> ✅ **100% Offline** - No Internet connection or API required!
-> ✅ **Open Source** - Free to use, modify, and distribute!
-
----
-
-## 🚀 Features
-
-### 🏠 **MAIN Tab** - Scanning Hub
 | Feature | Description |
 |---------|-------------|
-| 🎯 Target Input | IP, Domain, Subnet (e.g., 192.168.1.0/24) |
-| 🚀 ULTRA Scan | Fastest scan - 5-10 seconds |
-| ⚡ FAST Scan | Quick port scan - 15-30 seconds |
-| 📋 LIST Scan | Host listing - <2 seconds |
-| 🛡️ STEALTH Scan | Slow scan to evade IDS |
-| 🔍 FULL Scan | Complete scan: -p- -sV -sC |
-| 60+ Nmap Commands | 11 categories organized |
+| 🎯 **Target Input** | IP, Domain, Subnet (e.g., 192.168.1.0/24) |
+| 🚀 **ULTRA SCAN** | Fastest scan - 5-10 seconds (top 100 ports) |
+| ⚡ **FAST SCAN** | Quick scan - 15-30 seconds |
+| 📋 **LIST SCAN** | List all hosts - <2 seconds |
+| 🛡 **STEALTH SCAN** | Stealth scan - 1-2 minutes (IDS evasion) |
+| 🔍 **FULL SCAN** | Complete scan - 3-5 minutes (-p- -sV -sC) |
+| 📊 **60+ Nmap Commands** | 11 categories organized |
+| ▶ **RUN** | Start the scan |
+| ⏹ **STOP** | Stop the scan |
+| 🗑 **CLEAR** | Clear output |
+| 💾 **SAVE** | Save HTML/JSON report |
 
-### 📊 **OUTPUT Tab** - Console Output
+### 📊 **OUTPUT TAB - Console Output**
+
 | Feature | Description |
 |---------|-------------|
-| 📝 Manual Command | Run custom nmap commands |
-| 📊 Live Output | Real-time scan results |
-| 🗑️ CLEAR | Clear output display |
-| 📋 COPY | Copy output to clipboard |
-| 💾 SAVE | Save as HTML/JSON report |
+| 📝 **Manual Command** | Write and run custom nmap commands |
+| 📊 **Live Output** | Real-time scan results |
+| 🗑 **CLEAR** | Clear the output |
+| 📋 **COPY** | Copy output to clipboard |
+| 💾 **SAVE** | Save HTML/JSON report |
 
-### 🤖 **AI Tab** - 5 AI Features
+### 🤖 **AI TAB - 5 AI Features**
 
-#### 1. 🔮 **Advanced AI Engine**
-- Vulnerability Prediction (CVSS-based scoring)
-- Smart Scan Optimization (network-aware)
-- Anomaly Detection (backdoors, botnets)
-- CVE Database Search (90+ CVEs)
-- Full AI Security Report
+#### 🔮 **Advanced AI Engine (Vuln Prediction)**
+| Feature | Description |
+|---------|-------------|
+| 🔮 **PREDICT** | CVSS-based vulnerability prediction |
+| ⚡ **OPTIMIZE** | Network-based scan optimization |
+| 🕵️ **ANOMALY** | Backdoor/Botnet/Insecure service detection |
+| 📚 **CVE DB** | Search 90+ CVEs database |
+| 📊 **FULL REPORT** | Complete AI security report |
 
-#### 2. 🌐 **Network Mapping**
-- Discover Live Hosts
-- Topology Mapping (traceroute)
-- Service Dependency Analysis
-- Attack Surface Detection
-- Live Host Tracking
+#### 🌐 **Network Mapping**
+| Feature | Description |
+|---------|-------------|
+| 🌐 **DISCOVER** | Find live hosts (nmap -sn) |
+| 🗺️ **TOPOLOGY** | Network path via traceroute |
+| 🔗 **DEPENDENCIES** | Service dependencies (HTTP→MySQL) |
+| 🎯 **ATTACK SURFACE** | Attack vectors + risk scoring |
+| 📡 **LIVE TRACK** | Real-time host monitoring |
 
-#### 3. 🔍 **Advanced Discovery (OSINT)**
-- WHOIS Lookup
-- DNS Records (A, MX, NS, TXT)
-- Email Enumeration
-- Technology Fingerprinting (CMS, JS, Server)
-- Cloud Provider Detection (AWS, Azure, GCP)
+#### 🔍 **Advanced Discovery (OSINT)**
+| Feature | Description |
+|---------|-------------|
+| 🌐 **OSINT** | WHOIS + DNS Records (A, MX, NS, TXT) |
+| 🕵️ **PASSIVE** | Passive DNS lookups |
+| 📧 **EMAIL** | Email enumeration (admin@, info@) |
+| 💻 **TECH** | CMS, JS Framework, Web Server detection |
+| ☁️ **CLOUD** | AWS, Azure, GCP, Cloudflare detection |
+| 📦 **S3 Bucket** | Public S3 bucket check |
 
-#### 4. 📊 **Data Analytics**
-- 30-Day Trend Analysis
-- Auto Risk Scoring (0-100)
-- Compliance Checks (PCI-DSS, HIPAA, GDPR, ISO)
-- SLA Monitoring
-- 7-Day Predictive Analysis
+#### 📊 **Data Analytics**
+| Feature | Description |
+|---------|-------------|
+| 📈 **TREND** | 30-day scan trend analysis |
+| 🎯 **RISK SCORE** | Auto risk scoring (0-100) |
+| ✅ **COMPLIANCE** | PCI-DSS, HIPAA, GDPR, ISO-27001 check |
+| ⏱️ **SLA** | Uptime + Response time monitoring |
+| 🔮 **PREDICT** | 7-day risk prediction (ML-based) |
 
-#### 5. 🛡️ **Evasion Techniques**
-- Proxy Chains (Tor/SOCKS5/HTTP)
-- VPN Rotation
-- MAC Randomization
-- Traffic Shaping (delay/rate control)
-- IDS/IPS Detection
+#### 🛡 **Evasion Techniques**
+| Feature | Description |
+|---------|-------------|
+| 🌐 **PROXY** | Tor/SOCKS5/HTTP proxy enable/disable |
+| 🔒 **VPN** | VPN status check + rotate VPN |
+| 🔧 **MAC** | MAC address randomize + restore |
+| 📊 **TRAFFIC** | Scan delay + max rate control |
+| 🕵️ **IDS** | Firewall/IDS/IPS detection |
 
-### 🌐 **NETWORK Tab** - Direct Network Mapping
-- Discover Hosts
-- Topology Map
-- Service Dependencies
-- Attack Surface
-- Live Tracking
-- STOP ALL Button
+### 🌐 **NETWORK TAB - Direct Network Mapping**
+- Direct access to Network Mapping features
+- Discover, Topology, Dependencies, Attack Surface, Live Track
+- Single STOP ALL button
 
-### 🔍 **OSINT Tab** - Direct OSINT
-- Full OSINT Scan
-- Email Enumeration
-- Technology Fingerprinting
-- Cloud Discovery
-- Export Results
+### 🔍 **OSINT TAB - Direct OSINT**
+- Direct access to OSINT features
+- WHOIS + DNS + Email + Tech + Cloud
 
-### 📊 **ANALYTICS Tab** - Direct Analytics
-- Trend Analysis
-- Risk Scoring
-- Compliance Check
-- SLA Monitoring
-- Predictive Analysis
+### 📊 **ANALYTICS TAB - Direct Analytics**
+- Direct access to Data Analytics
+- Trend + Risk + Compliance + SLA + Predict
 
-### 🛡️ **EVASION Tab** - Direct Evasion
-- Proxy Chains
-- VPN Rotation
-- MAC Randomization
-- Traffic Shaping
-- IDS/IPS Detection
+### 🛡 **EVASION TAB - Direct Evasion**
+- Direct access to Evasion Techniques
+- Proxy + VPN + MAC + Traffic + IDS
 
-### 🧠 **ML Tab** - Deep Learning
-- ML Vulnerability Prediction (Random Forest)
-- Model Retraining
-- Model Accuracy Check
-- Export Predictions
-
----
-
-## 📸 Screenshots
-
-### Main Tab
-![Main Tab](screenshots/main.png)
-
-### AI Tab
-![AI Tab](screenshots/ai.png)
-
-### ML Tab
-![ML Tab](screenshots/ml.png)
-
-### Network Tab
-![Network Tab](screenshots/network.png)
+### 🧠 **ML TAB - Deep Learning Vulnerability Prediction**
+| Feature | Description |
+|---------|-------------|
+| 🔮 **PREDICT** | ML-based vulnerability prediction |
+| 🔄 **RETRAIN** | Retrain the model |
+| 📊 **ACCURACY** | Check model accuracy |
+| 💾 **EXPORT** | Export predictions |
+| 🧠 **Model** | Random Forest (100 estimators) |
+| 📊 **Training** | 90+ CVEs + synthetic data |
 
 ---
 
-## 🛠️ Installation
-
-### 📦 **Requirements**
-
-| Requirement | Version |
-|-------------|---------|
-| Python | 3.6+ |
-| Nmap | 7.80+ |
-| Tkinter | Built-in |
-| OS | Linux/Windows/Mac |
-
-### 🐍 **Python Dependencies**
-
-```bash
-# Install all dependencies
-pip install -r requirements.txt
-
-# Or install manually
-pip install python-whois dnspython requests scikit-learn numpy
+## 📁 **Project Structure**
