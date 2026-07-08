@@ -28,7 +28,6 @@
 - [Complete Button Reference](#-complete-button-reference)
 - [Installation Guide](#-installation-guide)
 - [Quick Start](#-quick-start)
-- [File Structure](#-file-structure)
 - [Troubleshooting](#-troubleshooting)
 - [Legal Disclaimer](#-legal-disclaimer)
 - [Contributing](#-contributing)
@@ -599,4 +598,21 @@ Direct access to **Evasion Techniques** features.
 
 ---
 
-## 📁 File Structure
+## 🛠 Installation Guide
+
+### 📦 Prerequisites
+
+| Requirement | Version | Check Command |
+|-------------|---------|---------------|
+| Python | 3.6+ | `python3 --version` |
+| Nmap | 7.80+ | `nmap --version` |
+| Tkinter | - | `python3 -m tkinter` |
+
+### 🐍 Python Dependencies
+
+```bash
+# Install all dependencies
+pip install python-whois dnspython requests scikit-learn numpy
+
+# Or use requirements.txt
+pip install -r run.txt
