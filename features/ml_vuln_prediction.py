@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 """
-🧠 DEEP LEARNING VULNERABILITY PREDICTION v1.0
-Machine Learning based vulnerability prediction
+🧠 MACHINE LEARNING VULNERABILITY PREDICTION
+Random Forest based vulnerability prediction
 ✅ बिना किसी API के - पूरी तरह से ऑफलाइन
 ✅ Scikit-learn based ML models
+✅ CNN Integration: DISABLED (uses ML only)
 """
 
 import tkinter as tk
@@ -15,12 +16,13 @@ import os
 import re
 import random
 import math
+import numpy as np
 from datetime import datetime, timedelta
 from collections import defaultdict
 import threading
 
+# ========== SKLEARN IMPORTS ==========
 try:
-    import numpy as np
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.linear_model import LogisticRegression
     from sklearn.model_selection import train_test_split
@@ -31,6 +33,10 @@ except ImportError:
     SKLEARN_AVAILABLE = False
     print("[ML] scikit-learn not installed. Install: pip install scikit-learn numpy")
 
+# ========== CNN Integration DISABLED ==========
+TENSORFLOW_AVAILABLE = False
+print("[ML] CNN integration disabled. Using ML only.")
+
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -39,7 +45,10 @@ from ai_features_manager import AIFeatureBase
 
 class MLVulnPredictionFeature(AIFeatureBase):
     """
-    🧠 Deep Learning Vulnerability Prediction
+    🧠 Machine Learning Vulnerability Prediction
+    - Random Forest Classification
+    - Logistic Regression (Backup)
+    - No CNN Integration
     """
     
     def __init__(self, parent, colors, output_text_widget=None):
@@ -47,7 +56,7 @@ class MLVulnPredictionFeature(AIFeatureBase):
         
         self.root = parent.winfo_toplevel() if parent else None
         
-        # Model data
+        # ========== ML Models ==========
         self.model = None
         self.scaler = None
         self.feature_names = []
@@ -55,8 +64,9 @@ class MLVulnPredictionFeature(AIFeatureBase):
         self.training_data = []
         self.data_file = "data/ml_model_data.json"
         self.predictions = []
+        self.scan_output_text = ""
         
-        # Port risk mapping
+        # ========== Port Risk Mapping ==========
         self.port_risk = {
             21: 8, 22: 7, 23: 9, 25: 6, 53: 6, 80: 7, 111: 5,
             139: 8, 443: 6, 445: 10, 512: 9, 513: 9, 514: 9,
@@ -76,13 +86,13 @@ class MLVulnPredictionFeature(AIFeatureBase):
             'bindshell': 10, 'nfs': 6
         }
         
-        # CVE database
+        # ========== CVE Database ==========
         self.cve_db = self._build_cve_db()
         
-        # Load or train model
+        # ========== Load or Train Model ==========
         self.load_model()
         
-        print("[ML Vuln Prediction] Loaded successfully")
+        print(f"[ML Vuln Prediction] Loaded successfully (CNN: DISABLED)")
     
     def _build_cve_db(self):
         """Build CVE database for training"""
@@ -261,8 +271,8 @@ class MLVulnPredictionFeature(AIFeatureBase):
                 prob = self.model.predict_proba(features_scaled)[0][1]
                 prediction = int(prob > 0.5)
             except:
+                prob = 0.5
                 prediction = 0
-                prob = 0
             
             matched_cves = []
             for cve_id, info in self.cve_db.items():
@@ -273,13 +283,16 @@ class MLVulnPredictionFeature(AIFeatureBase):
                         'exploit': info['exploit']
                     })
             
+            risk_score = min(100, int(prob * 80 + (port_risk + service_risk) * 5))
+            
             predictions.append({
                 'port': port,
                 'service': service,
                 'vulnerable': prediction == 1,
                 'probability': prob,
                 'cves': matched_cves,
-                'risk_score': min(100, int(prob * 80 + (port_risk + service_risk) * 5))
+                'risk_score': risk_score,
+                'model': "ML (Random Forest)"
             })
         
         return predictions
@@ -313,7 +326,8 @@ class MLVulnPredictionFeature(AIFeatureBase):
                 'vulnerable': vulnerable,
                 'probability': probability,
                 'cves': matched_cves,
-                'risk_score': min(100, int((port_risk + service_risk) * 6))
+                'risk_score': min(100, int((port_risk + service_risk) * 6)),
+                'model': "Fallback (Rule-based)"
             })
         
         return predictions
@@ -367,7 +381,15 @@ class MLVulnPredictionFeature(AIFeatureBase):
         except:
             return 0.75
     
-    # ========== UI BUILD ==========
+    def _safe_insert(self, text, tag='info'):
+        try:
+            if self.results_text:
+                self.results_text.insert(tk.END, text, tag)
+                self.results_text.see(tk.END)
+        except:
+            pass
+    
+    # ========== BUILD UI ==========
     def build_ui(self):
         self.frame = tk.Frame(self.parent, bg=self.colors['bg_primary'])
         
@@ -378,15 +400,17 @@ class MLVulnPredictionFeature(AIFeatureBase):
         
         tk.Label(
             header_frame,
-            text="🧠 DEEP LEARNING VULNERABILITY PREDICTION",
+            text="🧠 MACHINE LEARNING VULNERABILITY PREDICTION",
             bg=self.colors['bg_secondary'],
             fg=self.colors['neon_gold'],
             font=('Courier', 13, 'bold')
         ).pack(side=tk.LEFT, padx=15, pady=10)
         
+        model_status = "✅ ML READY" if SKLEARN_AVAILABLE else "⚠️ ML NOT AVAILABLE"
+        
         self.status_label = tk.Label(
             header_frame,
-            text="🟢 READY" if SKLEARN_AVAILABLE else "⚠️ ML NOT AVAILABLE",
+            text=model_status,
             bg=self.colors['bg_secondary'],
             fg=self.colors['neon_green'] if SKLEARN_AVAILABLE else self.colors['neon_red'],
             font=('Courier', 9, 'bold')
@@ -397,13 +421,9 @@ class MLVulnPredictionFeature(AIFeatureBase):
         info_frame = tk.Frame(self.frame, bg=self.colors['bg_card'])
         info_frame.pack(fill=tk.X, padx=10, pady=(0, 8))
         
-        model_status = "✅ Model Trained" if self.is_trained else "⚠️ Model Not Trained"
-        if not SKLEARN_AVAILABLE:
-            model_status = "❌ scikit-learn not installed"
-        
         tk.Label(
             info_frame,
-            text=f"🧠 Model: Random Forest | Status: {model_status} | Samples: {len(self.training_data)}",
+            text=f"🧠 Model: Random Forest | Status: {'✅ Trained' if self.is_trained else '⚠️ Not Trained'} | Samples: {len(self.training_data)} | CNN: DISABLED",
             bg=self.colors['bg_card'],
             fg=self.colors['gray'],
             font=('Courier', 9)
@@ -529,10 +549,8 @@ class MLVulnPredictionFeature(AIFeatureBase):
         self.results_text.tag_config('error', foreground=self.colors['neon_red'])
         self.results_text.tag_config('critical', foreground=self.colors['neon_red'], font=('Courier', 10, 'bold'))
         self.results_text.tag_config('header', foreground=self.colors['neon_purple'], font=('Courier', 11, 'bold'))
-        self.results_text.tag_config('high', foreground=self.colors['neon_red'])
-        self.results_text.tag_config('medium', foreground=self.colors['neon_orange'])
-        self.results_text.tag_config('low', foreground=self.colors['neon_green'])
-        self.results_text.tag_config('cve_id', foreground=self.colors['neon_cyan'], font=('Courier', 9, 'bold'))
+        self.results_text.tag_config('host', foreground=self.colors['neon_cyan'], font=('Courier', 9, 'bold'))
+        self.results_text.tag_config('cve_id', foreground=self.colors['neon_gold'], font=('Courier', 9, 'bold'))
         
         self.show_initial_message()
     
@@ -546,7 +564,7 @@ class MLVulnPredictionFeature(AIFeatureBase):
     
     def show_initial_message(self):
         self.results_text.delete(1.0, tk.END)
-        self.results_text.insert(tk.END, "🧠 DEEP LEARNING VULNERABILITY PREDICTION\n", 'header')
+        self.results_text.insert(tk.END, "🧠 MACHINE LEARNING VULNERABILITY PREDICTION\n", 'header')
         self.results_text.insert(tk.END, "="*60 + "\n\n", 'info')
         
         if not SKLEARN_AVAILABLE:
@@ -558,7 +576,7 @@ class MLVulnPredictionFeature(AIFeatureBase):
         self.results_text.insert(tk.END, "  🔮 ML Model (Random Forest) predicts vulnerabilities\n", 'info')
         self.results_text.insert(tk.END, f"  📊 Trained on {len(self.cve_db)} CVEs + {len(self.training_data)} samples\n", 'info')
         self.results_text.insert(tk.END, f"  🎯 Accuracy: {acc:.1f}%\n", 'info')
-        self.results_text.insert(tk.END, "  🔍 Predicts: Probability + Risk Score + CVEs\n\n", 'info')
+        self.results_text.insert(tk.END, "  🧠 CNN: DISABLED (Using ML only)\n\n", 'warning')
         self.results_text.insert(tk.END, "📌 Click 'PREDICT VULNERABILITIES' to analyze scan results\n", 'info')
     
     # ========== RUN PREDICTION ==========
@@ -591,7 +609,7 @@ class MLVulnPredictionFeature(AIFeatureBase):
                 
                 self.predictions = self.predict_vulnerability(services)
                 
-                self.root.after(0, lambda: self._display_predictions(self.predictions))
+                self.root.after(0, lambda: self._display_predictions())
                 self.root.after(0, lambda: self.export_btn.config(state=tk.NORMAL))
                 self.root.after(0, lambda: self.status_label.config(text="✅ PREDICTION COMPLETE", fg=self.colors['neon_green']))
                 
@@ -604,35 +622,35 @@ class MLVulnPredictionFeature(AIFeatureBase):
         
         threading.Thread(target=predict, daemon=True).start()
     
-    def _display_predictions(self, predictions):
+    def _display_predictions(self):
         """Display predictions in UI"""
-        
-        vulnerable_count = sum(1 for p in predictions if p['vulnerable'])
-        avg_prob = sum(p['probability'] for p in predictions) / len(predictions) if predictions else 0
+        vulnerable_count = sum(1 for p in self.predictions if p['vulnerable'])
+        avg_prob = sum(p['probability'] for p in self.predictions) / len(self.predictions) if self.predictions else 0
         
         self.results_text.insert(tk.END, "📊 PREDICTION SUMMARY\n", 'header')
         self.results_text.insert(tk.END, "-"*60 + "\n\n", 'info')
-        self.results_text.insert(tk.END, f"   • Total Services: {len(predictions)}\n", 'info')
+        self.results_text.insert(tk.END, f"   • Model: ML (Random Forest)\n", 'info')
+        self.results_text.insert(tk.END, f"   • Total Services: {len(self.predictions)}\n", 'info')
         self.results_text.insert(tk.END, f"   • Vulnerable: {vulnerable_count}\n", 'critical' if vulnerable_count > 0 else 'success')
         self.results_text.insert(tk.END, f"   • Average Probability: {avg_prob:.1%}\n", 'info')
-        self.results_text.insert(tk.END, f"   • ML Model: {'✅ Trained' if self.is_trained else '⚠️ Fallback'}\n", 'info')
+        self.results_text.insert(tk.END, f"   • CNN: DISABLED\n", 'warning')
         self.results_text.insert(tk.END, "\n" + "="*60 + "\n\n", 'info')
         
-        if not predictions:
+        if not self.predictions:
             self.results_text.insert(tk.END, "✅ No services to analyze!\n", 'success')
             return
         
-        sorted_preds = sorted(predictions, key=lambda x: x['risk_score'], reverse=True)
+        sorted_preds = sorted(self.predictions, key=lambda x: x['risk_score'], reverse=True)
         
         self.results_text.insert(tk.END, "🔮 PREDICTIONS\n", 'header')
         self.results_text.insert(tk.END, "-"*60 + "\n\n", 'info')
         
-        for pred in sorted_preds:
+        for pred in sorted_preds[:20]:
             risk = pred['risk_score']
-            prob = pred['probability']
             port = pred['port']
             service = pred['service'].upper()
             vulnerable = pred['vulnerable']
+            prob = pred['probability']
             
             if vulnerable and risk >= 70:
                 icon = "🔴"
@@ -651,24 +669,16 @@ class MLVulnPredictionFeature(AIFeatureBase):
             self.results_text.insert(tk.END, f"   📊 Risk Score: {risk}/100\n", tag)
             self.results_text.insert(tk.END, f"   📈 Probability: {prob:.1%}\n", tag)
             self.results_text.insert(tk.END, f"   🎯 Vulnerable: {'✅ YES' if vulnerable else '❌ NO'}\n", tag)
+            self.results_text.insert(tk.END, f"   📌 Model: ML (Random Forest)\n", 'info')
             
-            if pred['cves']:
+            if pred.get('cves'):
                 self.results_text.insert(tk.END, f"   📌 CVEs:\n", 'info')
                 for cve in pred['cves'][:3]:
-                    self.results_text.insert(tk.END, f"      • {cve['id']} (CVSS: {cve['cvss']})\n", 'cve_id')
-                    if cve['exploit']:
+                    self.results_text.insert(tk.END, f"      • {cve.get('id', 'Unknown')} (CVSS: {cve.get('cvss', 'N/A')})\n", 'cve_id')
+                    if cve.get('exploit'):
                         self.results_text.insert(tk.END, f"        🚨 EXPLOIT AVAILABLE\n", 'critical')
-            else:
-                self.results_text.insert(tk.END, f"   ℹ️ No known CVEs\n", 'info')
             
             self.results_text.insert(tk.END, "   " + "-"*40 + "\n", 'info')
-        
-        top_risks = [p for p in sorted_preds if p['vulnerable']][:5]
-        if top_risks:
-            self.results_text.insert(tk.END, "\n🎯 TOP RISK PREDICTIONS\n", 'header')
-            self.results_text.insert(tk.END, "-"*60 + "\n\n", 'info')
-            for p in top_risks:
-                self.results_text.insert(tk.END, f"   🔴 Port {p['port']} ({p['service']}) - Risk: {p['risk_score']}/100\n", 'critical')
     
     # ========== RETRAIN MODEL ==========
     def retrain_model(self):
@@ -736,6 +746,7 @@ class MLVulnPredictionFeature(AIFeatureBase):
         self.results_text.insert(tk.END, f"   🎯 Accuracy: {accuracy:.2%}\n", 'success' if accuracy > 0.7 else 'warning')
         self.results_text.insert(tk.END, f"   📈 CVEs Used: {len(self.cve_db)}\n", 'info')
         self.results_text.insert(tk.END, f"   🔧 Features: {len(self.feature_names)}\n", 'info')
+        self.results_text.insert(tk.END, f"   🧠 CNN: DISABLED\n", 'warning')
         
         if self.model and hasattr(self.model, 'feature_importances_'):
             self.results_text.insert(tk.END, "\n📊 FEATURE IMPORTANCE\n", 'header')
@@ -766,15 +777,14 @@ class MLVulnPredictionFeature(AIFeatureBase):
         filename = f"ml_predictions_{timestamp}.json"
         
         try:
-            results_text = self.results_text.get(1.0, tk.END)
-            
             with open(filename, 'w', encoding='utf-8') as f:
                 json.dump({
                     'timestamp': datetime.now().isoformat(),
                     'model': 'Random Forest',
                     'accuracy': self._get_accuracy() if self.is_trained else 0,
                     'samples': len(self.training_data),
-                    'predictions': self.predictions[:50]  # Save first 50
+                    'cnn_available': False,
+                    'predictions': self.predictions[:50]
                 }, f, indent=2)
             
             self.results_text.insert(tk.END, f"\n✅ Exported: {filename}\n", 'success')
