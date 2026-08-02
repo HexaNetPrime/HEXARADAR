@@ -1,3 +1,34 @@
-pip install whois dnspython requests cryptography
-apt install tor
-tor start:systemctl start tor
+# ============================================================
+# HEXARADAR v3.0 - Requirements
+# Complete Dependency List
+# ============================================================
+
+# ===== Core =====
+# python>=3.8   ← ❌ इस line को हटा दें या comment कर दें
+
+# ===== GUI =====
+# tkinter  # (Built-in with Python)
+
+# ===== Nmap =====
+# nmap  # Install separately: apt install nmap / brew install nmap
+
+# ===== Network / OSINT =====
+python-whois>=0.8.0
+dnspython>=2.4.0
+requests>=2.31.0
+urllib3>=2.0.0
+
+# ===== Cryptography =====
+cryptography>=39.0.0
+bcrypt>=4.0.0
+
+# ===== Machine Learning =====
+scikit-learn>=1.2.0
+numpy>=1.24.0
+
+# ===== Deep Learning / Neural Networks =====
+tensorflow>=2.13.0
+
+# ===== Optional =====
+# matplotlib>=3.7.0
+# pandas>=2.0.0
