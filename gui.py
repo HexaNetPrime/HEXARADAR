@@ -4,6 +4,8 @@
 """
 HEXARADAR v3.0 - COMPLETE EDITION
 8 पेज: MAIN + OUTPUT + AI + NETWORK + OSINT + ANALYTICS + EVASION + ML
+✅ CNN DISABLED - Using ML + Lightweight NN only
+✅ No TensorFlow Required
 """
 
 import tkinter as tk
@@ -20,6 +22,10 @@ import webbrowser
 
 from nmap_commands import NmapCommands
 from ai_features_manager import AIFeaturesManager
+
+# ========== CNN DISABLED - No TensorFlow Required ==========
+TENSORFLOW_AVAILABLE = False
+print("[GUI] CNN features disabled. Using ML + Lightweight NN only.")
 
 
 class NmapGUI:
@@ -717,7 +723,16 @@ class NmapGUI:
             font=('Courier', 14, 'bold')
         ).pack(side=tk.LEFT, padx=15)
         
-        # Create AI Manager - 5 features handle करेगा (ML removed from AI)
+        # CNN Status (Disabled)
+        tk.Label(
+            header_frame,
+            text="🧠 NN: ✅ (NumPy)",
+            bg=self.colors['bg_secondary'],
+            fg=self.colors['neon_green'],
+            font=('Courier', 10, 'bold')
+        ).pack(side=tk.RIGHT, padx=15)
+        
+        # Create AI Manager - 6 features handle करेगा
         self.ai_manager = AIFeaturesManager(content_frame, self.output_text_widget)
         if self.last_scan_output:
             self.ai_manager.update_scan_data(self.last_scan_output)
@@ -893,23 +908,47 @@ class NmapGUI:
     
     # ========== PAGE 7: ML VULNERABILITY PREDICTION ==========
     def create_ml_page(self):
-        """Page 7: ML Vulnerability Prediction"""
+        """Page 7: ML Vulnerability Prediction + Lightweight NN"""
         parent = self.pages[7]
         
         content_frame = tk.Frame(parent, bg=self.colors['bg_primary'])
         content_frame.pack(fill=tk.BOTH, expand=True)
         
-        header_frame = tk.Frame(content_frame, bg=self.colors['bg_secondary'], height=40)
+        header_frame = tk.Frame(content_frame, bg=self.colors['bg_secondary'], height=45)
         header_frame.pack(fill=tk.X, pady=(0, 5))
         header_frame.pack_propagate(False)
         
         tk.Label(
             header_frame,
-            text="🧠 DEEP LEARNING VULNERABILITY PREDICTION",
+            text="🧠 MACHINE LEARNING + NEURAL NETWORK",
             bg=self.colors['bg_secondary'],
             fg=self.colors['neon_gold'],
             font=('Courier', 14, 'bold')
         ).pack(side=tk.LEFT, padx=15)
+        
+        # NN Status (NumPy based)
+        tk.Label(
+            header_frame,
+            text="🧠 NN: ✅ (NumPy)",
+            bg=self.colors['bg_secondary'],
+            fg=self.colors['neon_green'],
+            font=('Courier', 9, 'bold')
+        ).pack(side=tk.RIGHT, padx=15)
+        
+        # Open NN Button
+        self.nn_open_btn = tk.Button(
+            header_frame,
+            text="🧠 Open NN",
+            command=self.open_nn_tab,
+            bg=self.colors['bg_card'],
+            fg=self.colors['neon_purple'],
+            font=('Courier', 9, 'bold'),
+            padx=12, pady=4,
+            cursor='hand2',
+            relief=tk.FLAT, bd=0
+        )
+        self.nn_open_btn.pack(side=tk.RIGHT, padx=10)
+        self._add_hover(self.nn_open_btn, self.colors['neon_purple'])
         
         # Load ML Feature Directly
         try:
@@ -929,6 +968,55 @@ class NmapGUI:
         except Exception as e:
             self._show_ml_placeholder(f"Error: {e}")
     
+    # ========== OPEN NN TAB ==========
+    def open_nn_tab(self):
+        """Open Lightweight Neural Network feature in a new window"""
+        try:
+            from features.cnn_vuln_prediction import CNNVulnPredictionFeature
+            
+            # Create new window for NN
+            nn_window = tk.Toplevel(self.root)
+            nn_window.title("🧠 Neural Network Vulnerability Prediction")
+            nn_window.geometry("1300x800")
+            nn_window.configure(bg=self.colors['bg_primary'])
+            
+            # Close button
+            close_btn = tk.Button(
+                nn_window,
+                text="✕ CLOSE",
+                command=nn_window.destroy,
+                bg=self.colors['bg_card'],
+                fg=self.colors['neon_red'],
+                font=('Courier', 9, 'bold'),
+                padx=10, pady=4,
+                cursor='hand2',
+                relief=tk.FLAT, bd=0
+            )
+            close_btn.pack(anchor=tk.NE, padx=10, pady=5)
+            
+            # Create NN feature
+            nn_feature = CNNVulnPredictionFeature(
+                nn_window,
+                self.colors,
+                self.output_text_widget
+            )
+            if self.last_scan_output:
+                nn_feature.update_scan_data(self.last_scan_output)
+            nn_feature.show()
+            
+            # Center window
+            nn_window.update_idletasks()
+            width = nn_window.winfo_width()
+            height = nn_window.winfo_height()
+            x = (nn_window.winfo_screenwidth() // 2) - (width // 2)
+            y = (nn_window.winfo_screenheight() // 2) - (height // 2)
+            nn_window.geometry(f"{width}x{height}+{x}+{y}")
+            
+        except ImportError as e:
+            messagebox.showerror("Error", f"NN feature not available: {e}")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error loading NN: {e}")
+    
     def _show_ml_placeholder(self, error_msg=""):
         """Placeholder for ML feature if not available"""
         frame = tk.Frame(self.pages[7], bg=self.colors['bg_primary'])
@@ -936,7 +1024,7 @@ class NmapGUI:
         
         tk.Label(
             frame,
-            text="🧠 DEEP LEARNING VULNERABILITY PREDICTION",
+            text="🧠 MACHINE LEARNING VULNERABILITY PREDICTION",
             bg=self.colors['bg_primary'],
             fg=self.colors['neon_gold'],
             font=('Courier', 16, 'bold')
