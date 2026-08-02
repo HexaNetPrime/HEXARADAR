@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-AI Features Manager - Updated for 5 Features (ML removed to Tab 8)
+AI Features Manager - Updated for 6 Features (ML removed to Tab 8 + CNN Added)
 """
 
 import tkinter as tk
@@ -81,7 +81,7 @@ class AIFeaturesManager:
             'gray': '#7a7a9a',
         }
         
-        # Register ALL AI Features (5 features - ML removed to Tab 8)
+        # Register ALL AI Features (6 features - ML removed to Tab 8 + CNN Added)
         self._register_features()
         
         # Setup UI
@@ -133,6 +133,15 @@ class AIFeaturesManager:
             description="Proxy Chains + VPN Rotation + MAC Randomization + Traffic Shaping + IDS/IPS Detection",
             module_name="evasion_techniques",
             class_name="EvasionTechniquesFeature"
+        )
+        
+        # ===== ✅ NEW FEATURE 6: CNN Vulnerability Prediction =====
+        self.registry.register_feature(
+            name="CNN Prediction",
+            icon="🧠",
+            description="CNN-based Vulnerability Detection + Ensemble Learning + Pattern Recognition + Auto-Learning",
+            module_name="cnn_vuln_prediction",
+            class_name="CNNVulnPredictionFeature"
         )
         
         # ===== ML Feature REMOVED - Now in Tab 8 =====
@@ -198,6 +207,18 @@ class AIFeaturesManager:
             module_name = f"features.{feature['module']}"
             class_name = feature['class']
             
+            # ========== ✅ CNN Feature Special Handling ==========
+            if feature['module'] == "cnn_vuln_prediction":
+                try:
+                    import tensorflow as tf
+                    TENSORFLOW_AVAILABLE = True
+                except ImportError:
+                    TENSORFLOW_AVAILABLE = False
+                
+                if not TENSORFLOW_AVAILABLE:
+                    self._show_cnn_placeholder(feature, "⚠️ TensorFlow not installed!\n   💡 Install: pip install tensorflow")
+                    return
+            
             module = __import__(module_name, fromlist=[class_name])
             feature_class = getattr(module, class_name)
             
@@ -208,7 +229,10 @@ class AIFeaturesManager:
                     self.output_text_widget
                 )
                 if self.registry.scan_data:
-                    feature['instance'].update_scan_data(self.registry.scan_data)
+                    try:
+                        feature['instance'].update_scan_data(self.registry.scan_data)
+                    except:
+                        pass
             
             feature['instance'].show()
             
@@ -244,6 +268,87 @@ class AIFeaturesManager:
                 text=f"Note: {error_msg}",
                 bg=self.colors['bg_primary'],
                 fg=self.colors['neon_gold'],
+                font=('Courier', 9)
+            ).pack(pady=5)
+    
+    def _show_cnn_placeholder(self, feature, error_msg=""):
+        """✅ CNN Feature Placeholder with Installation Instructions"""
+        frame = tk.Frame(self.content_frame, bg=self.colors['bg_primary'])
+        frame.pack(fill=tk.BOTH, expand=True)
+        
+        tk.Label(
+            frame,
+            text=f"{feature['icon']} {feature['name']}",
+            bg=self.colors['bg_primary'],
+            fg=self.colors['neon_cyan'],
+            font=('Courier', 16, 'bold')
+        ).pack(pady=30)
+        
+        tk.Label(
+            frame,
+            text="🧠 CNN Vulnerability Prediction",
+            bg=self.colors['bg_primary'],
+            fg=self.colors['neon_purple'],
+            font=('Courier', 14, 'bold')
+        ).pack(pady=10)
+        
+        tk.Label(
+            frame,
+            text="⚠️ TensorFlow is required for CNN feature!",
+            bg=self.colors['bg_primary'],
+            fg=self.colors['neon_red'],
+            font=('Courier', 12, 'bold')
+        ).pack(pady=10)
+        
+        tk.Label(
+            frame,
+            text="📌 Installation Instructions:",
+            bg=self.colors['bg_primary'],
+            fg=self.colors['neon_gold'],
+            font=('Courier', 11, 'bold')
+        ).pack(pady=10)
+        
+        install_frame = tk.Frame(frame, bg=self.colors['bg_secondary'])
+        install_frame.pack(pady=10, padx=20, fill=tk.X)
+        
+        tk.Label(
+            install_frame,
+            text="  pip install tensorflow  ",
+            bg=self.colors['bg_secondary'],
+            fg=self.colors['neon_green'],
+            font=('Courier', 11, 'bold')
+        ).pack(pady=10)
+        
+        tk.Label(
+            install_frame,
+            text="  or",
+            bg=self.colors['bg_secondary'],
+            fg=self.colors['gray'],
+            font=('Courier', 10)
+        ).pack()
+        
+        tk.Label(
+            install_frame,
+            text="  pip install torch torchvision  ",
+            bg=self.colors['bg_secondary'],
+            fg=self.colors['neon_cyan'],
+            font=('Courier', 11, 'bold')
+        ).pack(pady=10)
+        
+        tk.Label(
+            frame,
+            text="💡 After installation, restart HEXARADAR",
+            bg=self.colors['bg_primary'],
+            fg=self.colors['gray'],
+            font=('Courier', 10)
+        ).pack(pady=10)
+        
+        if error_msg:
+            tk.Label(
+                frame,
+                text=error_msg,
+                bg=self.colors['bg_primary'],
+                fg=self.colors['neon_red'],
                 font=('Courier', 9)
             ).pack(pady=5)
     
